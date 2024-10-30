@@ -1,0 +1,19 @@
+FROM golang:1.23-alpine AS builder
+
+WORKDIR /app
+
+COPY ../.. .
+
+RUN go mod download
+RUN go build -o client ./cmd/pow-client
+
+FROM alpine:latest
+
+WORKDIR /app
+
+# copt bin file
+COPY --from=builder /app/client .
+
+EXPOSE 8080
+
+CMD ["./client", "-server", "http://server:8080"]

@@ -1,0 +1,21 @@
+FROM golang:1.23-alpine AS builder
+
+WORKDIR /app
+
+COPY ../.. .
+
+RUN go mod download
+RUN go build -o server ./cmd/pow-server
+
+FROM alpine:latest
+
+WORKDIR /app
+
+# copt bin file
+COPY --from=builder /app/server .
+# copt config file
+COPY --from=builder /app/config/ ./config
+
+EXPOSE 8080
+
+CMD ["./server", "-config", "config/config.yaml"]

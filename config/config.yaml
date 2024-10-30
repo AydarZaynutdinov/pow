@@ -1,0 +1,39 @@
+App:
+  Mode: development
+Server:
+  Host: 0.0.0.0
+  Port: 8080
+  ReadTimeout: 5s
+  WriteTimeout: 10s
+  IdleTimeout: 120s
+  ShutdownDuration: 10s
+MaintenanceServer:
+  Host: 0.0.0.0
+  Port: 8081
+  ReadTimeout: 5s
+  WriteTimeout: 10s
+  IdleTimeout: 120s
+  ShutdownDuration: 10s
+Logger:
+  Level: debug
+  Time: rfc3339nano
+Cache:
+  Address: redis:6379
+  Username: ""
+  Password: ""
+  PoolSize: 10
+Challenge:
+  Len: 10
+  TTL: 30s
+  Difficulty: 4
+QuotesList:
+  - "The only way to do great work is to love what you do."
+  - "In the middle of every difficulty lies opportunity."
+  - "What lies behind us and what lies before us are tiny matters compared to what lies within us."
+  - "The best way to predict the future is to invent it."
+  - "Success is not final, failure is not fatal: It is the courage to continue that counts."
+  - "The only limit to our realization of tomorrow will be our doubts of today."
+  - "You miss 100% of the shots you don’t take."
+  - "It does not matter how slowly you go as long as you do not stop."
+  - "Believe you can and you’re halfway there."
+  - "Your time is limited, don’t waste it living someone else’s life."

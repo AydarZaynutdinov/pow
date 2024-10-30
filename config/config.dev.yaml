@@ -1,0 +1,39 @@
+App:
+  Mode: development
+Server:
+  Host: 127.0.0.1
+  Port: 8080
+  ReadTimeout: 5s
+  WriteTimeout: 10s
+  IdleTimeout: 120s
+  ShutdownDuration: 10s
+MaintenanceServer:
+  Host: 127.0.0.1
+  Port: 8081
+  ReadTimeout: 5s
+  WriteTimeout: 10s
+  IdleTimeout: 120s
+  ShutdownDuration: 10s
+Logger:
+  Level: debug
+  Time: rfc3339nano
+Cache:
+  Address: 127.0.0.1:6379
+  Username: ""
+  Password: ""
+  PoolSize: 10
+Challenge:
+  Len: 10
+  TTL: 30s
+  Difficulty: 4
+QuotesList:
+  - "Quote 1"
+  - "Quote 2"
+  - "Quote 3"
+  - "Quote 4"
+  - "Quote 5"
+  - "Quote 6"
+  - "Quote 7"
+  - "Quote 8"
+  - "Quote 9"
+  - "Quote 10"
