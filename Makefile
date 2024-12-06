@@ -1,44 +1,22 @@
-.PHONY: deps
-deps:
-	@echo 'Install dependencies'
-	go mod tidy -v
+.PHONY: test
+test:
+	go test -v ./...
 
-.PHONY: build-pow
-build-pow:
-	@echo 'Building pow app'
-	go build -buildvcs=false -o ./bin/pow ./cmd/pow-server
+.PHONY: build_server
+build_server:
+	docker build -t server:latest -f build/server.Dockerfile .
 
-.PHONY: build
-build: deps build-pow
+.PHONY: build_client
+build_client:
+	docker build -t client:latest -f build/client.Dockerfile .
 
-.PHONY: run-pow
-run-pow:
-	./bin/pow -config ./test/config/config.yaml
+.PHONY: build_all
+build_all: build_server build_client
 
-.PHONY: clean-testcache-environment
-clean-testcache-environment:
-	go clean -testcache
+.PHONY: up
+up:
+	docker-compose up --build -d
 
-.PHONY: unit-test
-unit-test: clean-testcache-environment
-	@echo 'Running unit tests...'
-	go test -race -short ./...
-
-.PHONY: integration-test
-integration-test: clean-testcache-environment
-	@echo 'Running integration tests...'
-	go test -race -run Integration ./test
-
-.PHONY: all-test
-all-test: unit-test integration-test
-
-.PHONY: all-test-one-command
-all-test-one-command: build
-	docker-compose -f ./scripts/test/docker-compose.yml up --build -d
-	- make run-pow >/dev/null 2>&1 &
-	go clean -testcache
-	make all-test;\
-	EXIT_CODE=$$?;\
-	ps aux | grep -i ./bin/pow | grep -v grep | awk {'print $$2'} | xargs kill -9;\
-	docker-compose -f ./scripts/test/docker-compose.yml down -v;\
-	exit $$EXIT_CODE
+.PHONY: down
+down:
+	docker-compose down -v

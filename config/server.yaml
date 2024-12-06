@@ -1,0 +1,14 @@
+server:
+  address: ":8080"
+  log_level: "DEBUG"
+  shut_down_timeout: 10s
+pow:
+  workers_count: 10
+  handler_timeout: 5s
+  complexity: 4
+quote_list:
+  - "quote 1"
+  - "quote 2"
+  - "quote 3"
+  - "quote 4"
+  - "quote 5"

@@ -1,39 +1,33 @@
-version: "3.9"
-
-volumes:
-  redis_data:
-
-networks:
-  app-network:
-    driver: bridge
+version: '3.9'
 
 services:
-  redis:
-    image: redis:7.0-alpine
-    container_name: redis
-    ports:
-      - "6379:6379"
-    networks:
-      - app-network
-    volumes:
-      - redis_data:/data
   server:
     build:
       context: .
-      dockerfile: Dockerfile.server
+      dockerfile: build/server.Dockerfile
+    image: server:latest
     container_name: server
     ports:
-      - "8080:8080"
-    depends_on:
-      - redis
+      - "8090:8080" # Host:Container
+    environment:
+      - SERVER_CONFIG_FILE=config/server.yaml
     networks:
-      - app-network
+      - pow_network
+
   client:
     build:
       context: .
-      dockerfile: Dockerfile.client
+      dockerfile: build/client.Dockerfile
+    image: client:latest
     container_name: client
     depends_on:
       - server
+    environment:
+      - CLIENT_CONFIG_FILE=config/client.yaml
+      - ADDRESS=server:8080
     networks:
-      - app-network
+      - pow_network
+
+networks:
+  pow_network:
+    driver: bridge
